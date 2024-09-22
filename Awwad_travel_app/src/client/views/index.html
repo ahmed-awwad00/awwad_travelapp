@@ -1,0 +1,109 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <title>Explore Your Destination</title>
+
+    <!-- Bootstrap CSS for styling -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+    />
+
+    <style>
+      h1 {
+  color: white;
+}
+      .destination-info {
+        color: #f8f9fa;
+      }
+      .custom-form {
+        background-color: #898d91;
+        padding: 20px;
+        border-radius: 8px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container d-flex flex-column justify-content-center align-items-center text-center vh-100">
+      <header class="mb-4">
+        <h1>Which direction do you want to go?</h1>
+      </header>
+      
+      <section class="custom-form text-white col-md-6 col-lg-4">
+        <form onsubmit="return Client.submithandelling(event)" method="POST">
+          <!-- Destination Input -->
+          <div class="mb-3">
+            <label for="city" class="form-label">Destination</label>
+            <div class="input-group">
+              <span class="input-group-text">
+                <i class="bi bi-geo-alt"></i>
+              </span>
+              <input
+                type="text"
+                id="cityLOC"
+                name="city"
+                class="form-control"
+                placeholder="Enter your travel destination"
+                aria-describedby="cityHelp"
+              />
+            </div>
+            <div id="errorCity" class="form-text text-danger mt-1"></div>
+          </div>
+
+          <!-- Date Input -->
+          <div class="mb-3">
+            <label for="flightDate" class="form-label">Travel Date</label>
+            <input
+              type="date"
+              id="travelDate"
+              name="date"
+              class="form-control"
+            />
+            <div id="errIn_data" class="form-text text-danger mt-1"></div>
+          </div>
+
+          <button type="submit" class="btn btn-light w-100">Search</button>
+        </form>
+      </section>
+
+      <!-- Displaying Flight Data -->
+      <section class="destination-info mt-5">
+        <h2 id="remainigDays"></h2>
+        <p class="nameoftheCity"></p>
+        <p class="temp"></p>
+        <p class="maximum-tempreture"></p>
+        <p class="minimum-tempreture"></p>
+        <p class="cityWeather"></p>
+        <div class="cityPicture"></div>
+      </section>
+    </div>
+    <script>
+      // Check if service workers are supported in the current browser
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/service-worker.js').then((registration) => {
+            console.log('ServiceWorker registration successful with scope: ', registration.scope);
+          }).catch((error) => {
+            console.log('ServiceWorker registration failed: ', error);
+          });
+          
+          
+          const form = document.querySelector("#form"); 
+          if (form) {
+            form.addEventListener("submit", (event) => {
+              event.preventDefault();
+              Client.submithandelling(event); 
+            });
+          }
+        });
+      }
+    </script>
+    
+    
+  </body>
+</html>
